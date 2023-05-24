@@ -1,0 +1,16 @@
+name: Villagers
+version: '${project.version}'
+main: net.achymake.villagers.Villagers
+api-version: 1.19
+prefix: '${project.name}'
+author: AchyMake
+description: '${project.description}'
+load: POSTWORLD
+commands:
+  villagers:
+    description: allows to use villagers command
+    permission: villagers.command
+permissions:
+  villagers.command:
+    description: allows to use villagers command
+    default: op
