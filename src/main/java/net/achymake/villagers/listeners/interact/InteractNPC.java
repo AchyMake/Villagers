@@ -22,7 +22,25 @@ public class InteractNPC implements Listener {
         event.setCancelled(true);
         if (event.getPlayer().isSneaking()) {
             if (event.getPlayer().hasPermission("villagers.command")) {
-                if (!entityConfig.hasSelected(event.getPlayer())) {
+                if (entityConfig.hasSelected(event.getPlayer())) {
+                    if (entityConfig.getSelected(event.getPlayer()).equals(event.getRightClicked())) {
+                        event.getPlayer().getServer().getScheduler().cancelTask(entityConfig.getTask(event.getPlayer()));
+                        entityConfig.removeSelected(event.getPlayer());
+                        message.send(event.getPlayer(), "&6You removed selected&f " + event.getRightClicked().getName());
+                    } else {
+                        event.getPlayer().getServer().getScheduler().cancelTask(entityConfig.getTask(event.getPlayer()));
+                        int taskID = Villagers.getInstance().getServer().getScheduler().runTaskLater(Villagers.getInstance(), new Runnable() {
+                            @Override
+                            public void run() {
+                                entityConfig.removeSelected(event.getPlayer());
+                                message.send(event.getPlayer(), "&cSelection of villagers expired");
+                            }
+                        }, 600).getTaskId();
+                        event.getPlayer().getPersistentDataContainer().set(NamespacedKey.minecraft("selected-villager"), PersistentDataType.STRING, event.getRightClicked().getUniqueId().toString());
+                        entityConfig.addTask(event.getPlayer(), taskID);
+                        message.send(event.getPlayer(), "&6You selected&f " + event.getRightClicked().getName());
+                    }
+                } else {
                     int taskID = Villagers.getInstance().getServer().getScheduler().runTaskLater(Villagers.getInstance(), new Runnable() {
                         @Override
                         public void run() {
