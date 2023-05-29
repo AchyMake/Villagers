@@ -20,8 +20,8 @@ public class VillagersCommand implements CommandExecutor, TabCompleter {
     public VillagersCommand() {
         villagersSubCommands.add(new Adult());
         villagersSubCommands.add(new Create());
-        villagersSubCommands.add(new Delete());
         villagersSubCommands.add(new Profession());
+        villagersSubCommands.add(new Remove());
         villagersSubCommands.add(new Rename());
         villagersSubCommands.add(new Silent());
         villagersSubCommands.add(new SubCommand());

@@ -6,17 +6,17 @@ import net.achymake.villagers.files.EntityConfig;
 import net.achymake.villagers.files.Message;
 import org.bukkit.entity.Player;
 
-public class Delete extends VillagersSubCommand {
+public class Remove extends VillagersSubCommand {
     private final EntityConfig entityConfig = Villagers.getEntityConfig();
     private final Message message = Villagers.getMessage();
     public String getName() {
-        return "delete";
+        return "remove";
     }
     public String getDescription() {
-        return "deletes villager npc";
+        return "removes villager npc";
     }
     public String getSyntax() {
-        return "/villagers delete";
+        return "/villagers remove";
     }
     public void perform(Player player, String[] args) {
         if (args.length == 1) {
