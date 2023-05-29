@@ -31,7 +31,6 @@ public class SubCommand extends VillagersSubCommand {
                         command.append(" ");
                     }
                     entityConfig.getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command"), PersistentDataType.STRING, command.toString().strip());
-                    entityConfig.getSelected(player).setCollidable(false);
                     message.send(player, "&6You added&f " + command.toString().strip() + "&6 with&f "+ args[1] + "&6 command");
                     entityConfig.removeSelected(player);
                 } else {

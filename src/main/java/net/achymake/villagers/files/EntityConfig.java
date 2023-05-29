@@ -28,7 +28,6 @@ public class EntityConfig {
         villager.setCustomNameVisible(true);
         villager.setInvulnerable(true);
         villager.setAI(false);
-        villager.setCollidable(false);
         villager.getPersistentDataContainer().set(NamespacedKey.minecraft("npc"), PersistentDataType.STRING, "true");
         message.send(player, "&6You created&f " + name + "&6 villager");
     }
