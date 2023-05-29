@@ -30,6 +30,7 @@ public class Rename extends VillagersSubCommand {
                     message.send(player, "&6You renamed&f "+ entityConfig.getSelected(player).getName() + "&6 to&f " + message.color(name.toString().strip()));
                     entityConfig.getSelected(player).setCustomName(message.color(name.toString().strip()));
                     entityConfig.getSelected(player).setCustomNameVisible(true);
+                    entityConfig.getSelected(player).setCollidable(false);
                     message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 profession to&f " + entityConfig.getSelected(player).getProfession().name());
                     entityConfig.removeSelected(player);
                 } else {

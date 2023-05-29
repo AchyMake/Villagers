@@ -25,10 +25,12 @@ public class Adult extends VillagersSubCommand {
                     boolean value = Boolean.valueOf(args[1]);
                     if (value) {
                         entityConfig.getSelected(player).setAdult();
+                        entityConfig.getSelected(player).setCollidable(false);
                         message.send(player, "&6You set&f " + entityConfig.getSelected(player).getName() + "&6 to&f adult");
                         entityConfig.removeSelected(player);
                     } else {
                         entityConfig.getSelected(player).setBaby();
+                        entityConfig.getSelected(player).setCollidable(false);
                         message.send(player, "&6You set&f " + entityConfig.getSelected(player).getName() + "&6 to&f baby");
                         entityConfig.removeSelected(player);
                     }

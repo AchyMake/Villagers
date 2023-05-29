@@ -1,5 +1,6 @@
 package net.achymake.villagers;
 
+import net.achymake.villagers.api.Metrics;
 import net.achymake.villagers.commands.VillagersCommand;
 import net.achymake.villagers.files.EntityConfig;
 import net.achymake.villagers.files.Message;
@@ -21,11 +22,13 @@ public final class Villagers extends JavaPlugin {
     private static Villagers instance;
     private static Message message;
     private static EntityConfig entityConfig;
+    private static Metrics metrics;
     @Override
     public void onEnable() {
         instance = this;
         message = new Message(this);
         entityConfig = new EntityConfig(this);
+        metrics = new Metrics(this, 18608);
         getCommand("villagers").setExecutor(new VillagersCommand());
         new NotifyUpdate(this);
         new Quit(this);
@@ -49,6 +52,7 @@ public final class Villagers extends JavaPlugin {
     }
     @Override
     public void onDisable() {
+        metrics.shutdown();
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static Message getMessage() {

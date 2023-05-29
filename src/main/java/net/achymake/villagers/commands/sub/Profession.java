@@ -24,6 +24,7 @@ public class Profession extends VillagersSubCommand {
             if (entityConfig.hasSelected(player)) {
                 if (entityConfig.getSelected(player) != null) {
                     entityConfig.getSelected(player).setProfession(Villager.Profession.valueOf(args[1]));
+                    entityConfig.getSelected(player).setCollidable(false);
                     message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 profession to&f " + entityConfig.getSelected(player).getProfession().name());
                     entityConfig.removeSelected(player);
                 } else {

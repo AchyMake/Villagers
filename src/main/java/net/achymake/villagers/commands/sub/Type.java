@@ -24,6 +24,7 @@ public class Type extends VillagersSubCommand {
             if (entityConfig.hasSelected(player)) {
                 if (entityConfig.getSelected(player) != null) {
                     entityConfig.getSelected(player).setVillagerType(Villager.Type.valueOf(args[1]));
+                    entityConfig.getSelected(player).setCollidable(false);
                     message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 type to&f " + entityConfig.getSelected(player).getVillagerType().name());
                     entityConfig.removeSelected(player);
                 } else {

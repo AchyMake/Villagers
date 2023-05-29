@@ -25,10 +25,12 @@ public class Silent extends VillagersSubCommand {
                     boolean value = Boolean.valueOf(args[1]);
                     if (value) {
                         entityConfig.getSelected(player).setSilent(true);
+                        entityConfig.getSelected(player).setCollidable(false);
                         message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 silent to&f true");
                         entityConfig.removeSelected(player);
                     } else {
                         entityConfig.getSelected(player).setSilent(false);
+                        entityConfig.getSelected(player).setCollidable(false);
                         message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 silent to&f false");
                         entityConfig.removeSelected(player);
                     }
