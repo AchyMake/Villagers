@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VillagersCommand implements CommandExecutor, TabCompleter {
-    private final EntityConfig entityConfig = Villagers.getEntityConfig();
+    private EntityConfig getEntityConfig() {
+        return Villagers.getEntityConfig();
+    }
     private final ArrayList<VillagersSubCommand> villagersSubCommands = new ArrayList<>();
 
     public VillagersCommand() {
@@ -65,13 +67,13 @@ public class VillagersCommand implements CommandExecutor, TabCompleter {
                     commands.add("player");
                 }
                 if (args[0].equalsIgnoreCase("adult")) {
-                    if (entityConfig.hasSelected((Player) sender)) {
-                        commands.add(String.valueOf(entityConfig.getSelected((Player) sender).isAdult()));
+                    if (getEntityConfig().hasSelected((Player) sender)) {
+                        commands.add(String.valueOf(getEntityConfig().getSelected((Player) sender).isAdult()));
                     }
                 }
                 if (args[0].equalsIgnoreCase("silent")) {
-                    if (entityConfig.hasSelected((Player) sender)) {
-                        commands.add(String.valueOf(entityConfig.getSelected((Player) sender).isSilent()));
+                    if (getEntityConfig().hasSelected((Player) sender)) {
+                        commands.add(String.valueOf(getEntityConfig().getSelected((Player) sender).isSilent()));
                     }
                 }
             }

@@ -8,8 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 
 public class Profession extends VillagersSubCommand {
-    private final EntityConfig entityConfig = Villagers.getEntityConfig();
-    private final Message message = Villagers.getMessage();
+    private EntityConfig getEntityConfig() {
+        return Villagers.getEntityConfig();
+    }
+    private Message getMessage() {
+        return Villagers.getMessage();
+    }
     public String getName() {
         return "profession";
     }
@@ -21,16 +25,16 @@ public class Profession extends VillagersSubCommand {
     }
     public void perform(Player player, String[] args) {
         if (args.length == 2) {
-            if (entityConfig.hasSelected(player)) {
-                if (entityConfig.getSelected(player) != null) {
-                    entityConfig.getSelected(player).setProfession(Villager.Profession.valueOf(args[1]));
-                    message.send(player, "&6You set&f "+ entityConfig.getSelected(player).getName() + "&6 profession to&f " + entityConfig.getSelected(player).getProfession().name());
-                    entityConfig.removeSelected(player);
+            if (getEntityConfig().hasSelected(player)) {
+                if (getEntityConfig().getSelected(player) != null) {
+                    getEntityConfig().getSelected(player).setProfession(Villager.Profession.valueOf(args[1]));
+                    getMessage().send(player, "&6You set&f "+ getEntityConfig().getSelected(player).getName() + "&6 profession to&f " + getEntityConfig().getSelected(player).getProfession().name());
+                    getEntityConfig().removeSelected(player);
                 } else {
-                    message.send(player, "&cYou have to select a villager");
+                    getMessage().send(player, "&cYou have to select a villager");
                 }
             } else {
-                message.send(player, "&cYou have to select a villager");
+                getMessage().send(player, "&cYou have to select a villager");
             }
         }
     }

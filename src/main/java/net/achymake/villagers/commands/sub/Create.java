@@ -6,7 +6,9 @@ import net.achymake.villagers.files.EntityConfig;
 import org.bukkit.entity.Player;
 
 public class Create extends VillagersSubCommand {
-    private final EntityConfig entityConfig = Villagers.getEntityConfig();
+    private EntityConfig getEntityConfig() {
+        return Villagers.getEntityConfig();
+    }
     public String getName() {
         return "create";
     }
@@ -23,7 +25,7 @@ public class Create extends VillagersSubCommand {
                 name.append(args[i]);
                 name.append(" ");
             }
-            entityConfig.createVillager(player, name.toString().strip());
+            getEntityConfig().createVillager(player, name.toString().strip());
         }
     }
 }

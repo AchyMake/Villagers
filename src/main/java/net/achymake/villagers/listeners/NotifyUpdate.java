@@ -1,4 +1,4 @@
-package net.achymake.villagers.listeners.connection;
+package net.achymake.villagers.listeners;
 
 import net.achymake.villagers.Villagers;
 import net.achymake.villagers.version.UpdateChecker;

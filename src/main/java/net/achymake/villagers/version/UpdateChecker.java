@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 public class UpdateChecker {
     private final Villagers plugin;
@@ -29,17 +30,18 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Villagers.getMessage().sendLog(e.getMessage());
+                Villagers.getMessage().sendLog(Level.WARNING, e.getMessage());
             }
         });
     }
     public void getUpdate() {
         (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
+            Villagers.getMessage().sendLog(Level.INFO, "Checking latest version");
             if (plugin.getDescription().getVersion().equals(latest)) {
-                Villagers.getMessage().sendLog("You are using the latest version");
+                Villagers.getMessage().sendLog(Level.INFO, "You are using the latest version");
             } else {
-                Villagers.getMessage().sendLog("New Update: " + latest);
-                Villagers.getMessage().sendLog("Current Version: " + plugin.getDescription().getVersion());
+                Villagers.getMessage().sendLog(Level.INFO, "New Update: " + latest);
+                Villagers.getMessage().sendLog(Level.INFO, "Current Version: " + plugin.getDescription().getVersion());
             }
         });
     }

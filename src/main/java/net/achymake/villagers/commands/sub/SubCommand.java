@@ -9,8 +9,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 public class SubCommand extends VillagersSubCommand {
-    private final EntityConfig entityConfig = Villagers.getEntityConfig();
-    private final Message message = Villagers.getMessage();
+    private EntityConfig getEntityConfig() {
+        return Villagers.getEntityConfig();
+    }
+    private Message getMessage() {
+        return Villagers.getMessage();
+    }
     public String getName() {
         return "command";
     }
@@ -22,22 +26,22 @@ public class SubCommand extends VillagersSubCommand {
     }
     public void perform(Player player, String[] args) {
         if (args.length >= 3) {
-            if (entityConfig.hasSelected(player)) {
-                if (entityConfig.getSelected(player) != null) {
-                    entityConfig.getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command-type"), PersistentDataType.STRING, args[1]);
+            if (getEntityConfig().hasSelected(player)) {
+                if (getEntityConfig().getSelected(player) != null) {
+                    getEntityConfig().getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command-type"), PersistentDataType.STRING, args[1]);
                     StringBuilder command = new StringBuilder();
                     for (int i = 2; i < args.length; i++) {
                         command.append(args[i]);
                         command.append(" ");
                     }
-                    entityConfig.getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command"), PersistentDataType.STRING, command.toString().strip());
-                    message.send(player, "&6You added&f " + command.toString().strip() + "&6 with&f "+ args[1] + "&6 command");
-                    entityConfig.removeSelected(player);
+                    getEntityConfig().getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command"), PersistentDataType.STRING, command.toString().strip());
+                    getMessage().send(player, "&6You added&f " + command.toString().strip() + "&6 with&f "+ args[1] + "&6 command");
+                    getEntityConfig().removeSelected(player);
                 } else {
-                    message.send(player, "&cYou have to select a villager");
+                    getMessage().send(player, "&cYou have to select a villager");
                 }
             } else {
-                message.send(player, "&cYou have to select a villager");
+                getMessage().send(player, "&cYou have to select a villager");
             }
         }
     }

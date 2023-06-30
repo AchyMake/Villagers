@@ -13,23 +13,21 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.UUID;
 
 public class EntityConfig {
-    private final Villagers villagers;
-    public EntityConfig(Villagers villagers) {
-        this.villagers = villagers;
+    private Message getMessage() {
+        return Villagers.getMessage();
     }
-    private final Message message = Villagers.getMessage();
     public void createVillager(Player player, String name) {
         Location location = player.getLocation();
         location.setPitch(0);
         Villager villager = (Villager) player.getWorld().spawnEntity(location, EntityType.VILLAGER);
         villager.setProfession(Villager.Profession.NONE);
         villager.setVillagerType(Villager.Type.PLAINS);
-        villager.setCustomName(message.color(name));
+        villager.setCustomName(getMessage().addColor(name));
         villager.setCustomNameVisible(true);
         villager.setInvulnerable(true);
         villager.setAI(false);
         villager.getPersistentDataContainer().set(NamespacedKey.minecraft("npc"), PersistentDataType.STRING, "true");
-        message.send(player, "&6You created&f " + name + "&6 villager");
+        getMessage().send(player, "&6You created&f " + name + "&6 villager");
     }
     private PersistentDataContainer data(Entity entity) {
         return entity.getPersistentDataContainer();

@@ -1,37 +1,51 @@
 package net.achymake.villagers;
 
-import net.achymake.villagers.api.Metrics;
 import net.achymake.villagers.commands.VillagersCommand;
 import net.achymake.villagers.files.EntityConfig;
 import net.achymake.villagers.files.Message;
-import net.achymake.villagers.listeners.connection.NotifyUpdate;
-import net.achymake.villagers.listeners.connection.Quit;
-import net.achymake.villagers.listeners.damage.*;
-import net.achymake.villagers.listeners.entity.NPCBreed;
-import net.achymake.villagers.listeners.entity.NPCEnterLoveMode;
-import net.achymake.villagers.listeners.interact.InteractNPC;
-import net.achymake.villagers.listeners.pickup.NPCPickupItem;
-import net.achymake.villagers.listeners.target.EntityTargetNPC;
-import net.achymake.villagers.listeners.villager.NPCAcquireTrade;
-import net.achymake.villagers.listeners.villager.NPCCareerChange;
-import net.achymake.villagers.listeners.villager.NPCReplenishTrade;
+import net.achymake.villagers.listeners.*;
+import net.achymake.villagers.listeners.NPCBreed;
+import net.achymake.villagers.listeners.NPCEnterLoveMode;
+import net.achymake.villagers.listeners.InteractNPC;
+import net.achymake.villagers.listeners.NPCPickupItem;
+import net.achymake.villagers.listeners.EntityTargetNPC;
+import net.achymake.villagers.listeners.NPCAcquireTrade;
+import net.achymake.villagers.listeners.NPCCareerChange;
+import net.achymake.villagers.listeners.NPCReplenishTrade;
 import net.achymake.villagers.version.UpdateChecker;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 public final class Villagers extends JavaPlugin {
     private static Villagers instance;
+    public static Villagers getInstance() {
+        return instance;
+    }
     private static Message message;
+    public static Message getMessage() {
+        return message;
+    }
     private static EntityConfig entityConfig;
-    private static Metrics metrics;
-    @Override
-    public void onEnable() {
+    public static EntityConfig getEntityConfig() {
+        return entityConfig;
+    }
+    private void start() {
         instance = this;
-        message = new Message(this);
-        entityConfig = new EntityConfig(this);
-        metrics = new Metrics(this, 18608);
+        message = new Message(getLogger());
+        entityConfig = new EntityConfig();
+        commands();
+        events();
+        getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
+        new UpdateChecker(this, 109924).getUpdate();
+    }
+    private void stop() {
+        getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
+    }
+    private void commands() {
         getCommand("villagers").setExecutor(new VillagersCommand());
-        new NotifyUpdate(this);
-        new Quit(this);
+    }
+    private void events() {
         new DamageNPC(this);
         new DamageNPCCreative(this);
         new DamageNPCCreativeArrow(this);
@@ -39,29 +53,23 @@ public final class Villagers extends JavaPlugin {
         new DamageNPCCreativeSpectralArrow(this);
         new DamageNPCCreativeThrownPotion(this);
         new DamageNPCCreativeTrident(this);
-        new NPCBreed(this);
-        new NPCEnterLoveMode(this);
-        new InteractNPC(this);
-        new NPCPickupItem(this);
         new EntityTargetNPC(this);
+        new InteractNPC(this);
+        new NotifyUpdate(this);
         new NPCAcquireTrade(this);
+        new NPCBreed(this);
         new NPCCareerChange(this);
+        new NPCEnterLoveMode(this);
+        new NPCPickupItem(this);
         new NPCReplenishTrade(this);
-        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 109924).getUpdate();
+        new Quit(this);
+    }
+    @Override
+    public void onEnable() {
+        start();
     }
     @Override
     public void onDisable() {
-        metrics.shutdown();
-        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
-    }
-    public static Message getMessage() {
-        return message;
-    }
-    public static EntityConfig getEntityConfig() {
-        return entityConfig;
-    }
-    public static Villagers getInstance() {
-        return instance;
+        stop();
     }
 }

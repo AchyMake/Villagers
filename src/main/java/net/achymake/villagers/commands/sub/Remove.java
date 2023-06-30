@@ -7,8 +7,12 @@ import net.achymake.villagers.files.Message;
 import org.bukkit.entity.Player;
 
 public class Remove extends VillagersSubCommand {
-    private final EntityConfig entityConfig = Villagers.getEntityConfig();
-    private final Message message = Villagers.getMessage();
+    private EntityConfig getEntityConfig() {
+        return Villagers.getEntityConfig();
+    }
+    private Message getMessage() {
+        return Villagers.getMessage();
+    }
     public String getName() {
         return "remove";
     }
@@ -20,16 +24,16 @@ public class Remove extends VillagersSubCommand {
     }
     public void perform(Player player, String[] args) {
         if (args.length == 1) {
-            if (entityConfig.hasSelected(player)) {
-                if (entityConfig.getSelected(player) != null) {
-                    message.send(player, "&6You removed&f "+ entityConfig.getSelected(player).getName());
-                    entityConfig.getSelected(player).remove();
-                    entityConfig.removeSelected(player);
+            if (getEntityConfig().hasSelected(player)) {
+                if (getEntityConfig().getSelected(player) != null) {
+                    getMessage().send(player, "&6You removed&f " + getEntityConfig().getSelected(player).getName());
+                    getEntityConfig().getSelected(player).remove();
+                    getEntityConfig().removeSelected(player);
                 } else {
-                    message.send(player, "&cYou have to select a villager");
+                    getMessage().send(player, "&cYou have to select a villager");
                 }
             } else {
-                message.send(player, "&cYou have to select a villager");
+                getMessage().send(player, "&cYou have to select a villager");
             }
         }
     }
