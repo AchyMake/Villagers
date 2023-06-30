@@ -11,8 +11,8 @@ public class NPCPickupItem implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public NPCPickupItem(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public NPCPickupItem(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onNPCPickupItem(EntityPickupItemEvent event) {

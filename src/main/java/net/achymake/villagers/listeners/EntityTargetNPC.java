@@ -11,8 +11,8 @@ public class EntityTargetNPC implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public EntityTargetNPC(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public EntityTargetNPC(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityTargetNPC(EntityTargetEvent event) {

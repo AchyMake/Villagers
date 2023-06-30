@@ -11,8 +11,8 @@ public class NPCEnterLoveMode implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public NPCEnterLoveMode(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public NPCEnterLoveMode(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onNPCEnterLoveMode(EntityEnterLoveModeEvent event) {

@@ -11,8 +11,8 @@ public class NPCCareerChange implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public NPCCareerChange(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public NPCCareerChange(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onVillagerCareerChange(VillagerCareerChangeEvent event) {

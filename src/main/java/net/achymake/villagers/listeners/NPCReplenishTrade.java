@@ -11,8 +11,8 @@ public class NPCReplenishTrade implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public NPCReplenishTrade(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public NPCReplenishTrade(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onVillagerReplenishTrade(VillagerReplenishTradeEvent event) {

@@ -11,8 +11,8 @@ public class Quit implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public Quit(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public Quit(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onQuit(PlayerQuitEvent event) {

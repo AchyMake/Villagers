@@ -9,21 +9,24 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class DamageNPCCreativeSpectralArrow implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public DamageNPCCreativeSpectralArrow(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public DamageNPCCreativeSpectralArrow(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageNPCCreativeSpectralArrow(EntityDamageByEntityEvent event) {
         if (!getEntityConfig().isNPC(event.getEntity()))return;
         if (!event.getDamager().getType().equals(EntityType.SPECTRAL_ARROW))return;
         SpectralArrow damager = (SpectralArrow) event.getDamager();
-        if (damager.getShooter() instanceof Player) {
-            event.setCancelled(true);
-        }
+        if (!isPlayer(damager.getShooter()))return;
+        event.setCancelled(true);
+    }
+    private boolean isPlayer(ProjectileSource projectileSource) {
+        return projectileSource instanceof Player;
     }
 }

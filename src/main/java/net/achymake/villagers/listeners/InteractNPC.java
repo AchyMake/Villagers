@@ -17,8 +17,8 @@ public class InteractNPC implements Listener {
     private Message getMessage() {
         return Villagers.getMessage();
     }
-    public InteractNPC(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public InteractNPC(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteractAtNPC(PlayerInteractEntityEvent event) {

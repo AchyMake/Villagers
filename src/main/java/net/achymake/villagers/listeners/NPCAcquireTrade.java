@@ -11,8 +11,8 @@ public class NPCAcquireTrade implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public NPCAcquireTrade(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public NPCAcquireTrade(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onVillagerAcquireTrade(VillagerAcquireTradeEvent event) {

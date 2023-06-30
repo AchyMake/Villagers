@@ -11,8 +11,8 @@ public class DamageNPC implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public DamageNPC(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public DamageNPC(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageNPC(EntityDamageByEntityEvent event) {

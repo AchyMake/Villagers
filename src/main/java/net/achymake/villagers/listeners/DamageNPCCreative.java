@@ -12,8 +12,8 @@ public class DamageNPCCreative implements Listener {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
     }
-    public DamageNPCCreative(Villagers villagers) {
-        villagers.getServer().getPluginManager().registerEvents(this, villagers);
+    public DamageNPCCreative(Villagers plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageNPCCreative(EntityDamageByEntityEvent event) {

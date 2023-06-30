@@ -1,26 +1,25 @@
 package net.achymake.villagers;
 
-import net.achymake.villagers.commands.VillagersCommand;
-import net.achymake.villagers.files.EntityConfig;
-import net.achymake.villagers.files.Message;
+import net.achymake.villagers.commands.*;
+import net.achymake.villagers.files.*;
 import net.achymake.villagers.listeners.*;
-import net.achymake.villagers.listeners.NPCBreed;
-import net.achymake.villagers.listeners.NPCEnterLoveMode;
-import net.achymake.villagers.listeners.InteractNPC;
-import net.achymake.villagers.listeners.NPCPickupItem;
-import net.achymake.villagers.listeners.EntityTargetNPC;
-import net.achymake.villagers.listeners.NPCAcquireTrade;
-import net.achymake.villagers.listeners.NPCCareerChange;
-import net.achymake.villagers.listeners.NPCReplenishTrade;
 import net.achymake.villagers.version.UpdateChecker;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 
 public final class Villagers extends JavaPlugin {
     private static Villagers instance;
     public static Villagers getInstance() {
         return instance;
+    }
+    private static FileConfiguration configuration;
+    public static FileConfiguration getConfiguration() {
+        return configuration;
     }
     private static Message message;
     public static Message getMessage() {
@@ -32,12 +31,14 @@ public final class Villagers extends JavaPlugin {
     }
     private void start() {
         instance = this;
+        configuration = getConfig();
         message = new Message(getLogger());
         entityConfig = new EntityConfig();
+        reload();
         commands();
         events();
         getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 109924).getUpdate();
+        new UpdateChecker().getUpdate();
     }
     private void stop() {
         getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
@@ -71,5 +72,21 @@ public final class Villagers extends JavaPlugin {
     @Override
     public void onDisable() {
         stop();
+    }
+    public void reload() {
+        File file = new File(getDataFolder(), "config.yml");
+        if (file.exists()) {
+            try {
+                getConfig().load(file);
+                getMessage().sendLog(Level.INFO, "loaded config.yml");
+            } catch (IOException | InvalidConfigurationException e) {
+                getMessage().sendLog(Level.WARNING, e.getMessage());
+            }
+            saveConfig();
+        } else {
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+            getMessage().sendLog(Level.INFO, "created config.yml");
+        }
     }
 }
