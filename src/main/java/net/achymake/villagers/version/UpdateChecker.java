@@ -1,6 +1,7 @@
 package net.achymake.villagers.version;
 
 import net.achymake.villagers.Villagers;
+import net.achymake.villagers.files.Message;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ public class UpdateChecker {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
+    private Message getMessage() {
+        return Villagers.getMessage();
+    }
     public void getVersion(Consumer<String> consumer) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
@@ -30,26 +34,26 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Villagers.getMessage().sendLog(Level.WARNING, e.getMessage());
+                getMessage().sendLog(Level.WARNING, e.getMessage());
             }
         });
     }
     public void getUpdate() {
         (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
-            Villagers.getMessage().sendLog(Level.INFO, "Checking latest version");
+            getMessage().sendLog(Level.INFO, "Checking latest version");
             if (plugin.getDescription().getVersion().equals(latest)) {
-                Villagers.getMessage().sendLog(Level.INFO, "You are using the latest version");
+                getMessage().sendLog(Level.INFO, "You are using the latest version");
             } else {
-                Villagers.getMessage().sendLog(Level.INFO, "New Update: " + latest);
-                Villagers.getMessage().sendLog(Level.INFO, "Current Version: " + plugin.getDescription().getVersion());
+                getMessage().sendLog(Level.INFO, "New Update: " + latest);
+                getMessage().sendLog(Level.INFO, "Current Version: " + plugin.getDescription().getVersion());
             }
         });
     }
     public void sendMessage(Player player) {
         (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                Villagers.getMessage().send(player,"&6" + plugin.getName() + " Update:&f "+ latest);
-                Villagers.getMessage().send(player,"&6Current Version: &f" + plugin.getDescription().getVersion());
+                getMessage().send(player,"&6" + plugin.getName() + " Update:&f "+ latest);
+                getMessage().send(player,"&6Current Version: &f" + plugin.getDescription().getVersion());
             }
         });
     }
