@@ -3,7 +3,6 @@ package net.achymake.villagers.commands.sub;
 import net.achymake.villagers.Villagers;
 import net.achymake.villagers.commands.VillagersSubCommand;
 import net.achymake.villagers.files.EntityConfig;
-import net.achymake.villagers.files.Message;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
@@ -11,9 +10,6 @@ import org.bukkit.persistence.PersistentDataType;
 public class SubCommand extends VillagersSubCommand {
     private EntityConfig getEntityConfig() {
         return Villagers.getEntityConfig();
-    }
-    private Message getMessage() {
-        return Villagers.getMessage();
     }
     public String getName() {
         return "command";
@@ -35,13 +31,13 @@ public class SubCommand extends VillagersSubCommand {
                         command.append(" ");
                     }
                     getEntityConfig().getSelected(player).getPersistentDataContainer().set(NamespacedKey.minecraft("command"), PersistentDataType.STRING, command.toString().strip());
-                    getMessage().send(player, "&6You added&f " + command.toString().strip() + "&6 with&f "+ args[1] + "&6 command");
+                    Villagers.send(player, "&6You added&f " + command.toString().strip() + "&6 with&f "+ args[1] + "&6 command");
                     getEntityConfig().removeSelected(player);
                 } else {
-                    getMessage().send(player, "&cYou have to select a villager");
+                    Villagers.send(player, "&cYou have to select a villager");
                 }
             } else {
-                getMessage().send(player, "&cYou have to select a villager");
+                Villagers.send(player, "&cYou have to select a villager");
             }
         }
     }

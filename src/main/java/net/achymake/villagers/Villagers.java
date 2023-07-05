@@ -3,6 +3,10 @@ package net.achymake.villagers;
 import net.achymake.villagers.commands.*;
 import net.achymake.villagers.files.*;
 import net.achymake.villagers.listeners.*;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -15,6 +19,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class Villagers extends JavaPlugin {
     private static Villagers instance;
@@ -25,27 +30,29 @@ public final class Villagers extends JavaPlugin {
     public static FileConfiguration getConfiguration() {
         return configuration;
     }
-    private static Message message;
-    public static Message getMessage() {
-        return message;
+    private static Logger logger;
+    public static void sendLog(Level level, String message) {
+        logger.log(level, message);
     }
     private static EntityConfig entityConfig;
     public static EntityConfig getEntityConfig() {
         return entityConfig;
     }
-    private void start() {
+    @Override
+    public void onEnable() {
         instance = this;
         configuration = getConfig();
-        message = new Message(getLogger());
+        logger = getLogger();
         entityConfig = new EntityConfig();
         reload();
         commands();
         events();
-        getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
-        sendUpdate();
+        sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
+        getUpdate();
     }
-    private void stop() {
-        getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
+    @Override
+    public void onDisable() {
+        sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     private void commands() {
         getCommand("villagers").setExecutor(new VillagersCommand());
@@ -69,54 +76,51 @@ public final class Villagers extends JavaPlugin {
         new NPCReplenishTrade(this);
         new Quit(this);
     }
-    @Override
-    public void onEnable() {
-        start();
-    }
-    @Override
-    public void onDisable() {
-        stop();
-    }
     public void reload() {
         File file = new File(getDataFolder(), "config.yml");
         if (file.exists()) {
             try {
                 getConfig().load(file);
-                getMessage().sendLog(Level.INFO, "loaded config.yml");
+                sendLog(Level.INFO, "loaded config.yml");
             } catch (IOException | InvalidConfigurationException e) {
-                getMessage().sendLog(Level.WARNING, e.getMessage());
+                sendLog(Level.WARNING, e.getMessage());
             }
             saveConfig();
         } else {
             getConfig().options().copyDefaults(true);
             saveConfig();
-            getMessage().sendLog(Level.INFO, "created config.yml");
+            sendLog(Level.INFO, "created config.yml");
         }
     }
-    public void sendUpdate(Player player) {
+    public void getUpdate(Player player) {
         if (getConfig().getBoolean("notify-update.enable")) {
-            checkLatest((latest) -> {
+            getLatest((latest) -> {
                 if (!getDescription().getVersion().equals(latest)) {
-                    getMessage().send(player,"&6" + getName() + " Update:&f " + latest);
-                    getMessage().send(player,"&6Current Version: &f" + getDescription().getVersion());
+                    send(player,"&6" + getName() + " Update:&f " + latest);
+                    send(player,"&6Current Version: &f" + getDescription().getVersion());
                 }
             });
         }
     }
-    public void sendUpdate() {
+    public void getUpdate() {
         if (getConfig().getBoolean("notify-update.enable")) {
-            checkLatest((latest) -> {
-                getMessage().sendLog(Level.INFO, "Checking latest release");
-                if (getDescription().getVersion().equals(latest)) {
-                    getMessage().sendLog(Level.INFO, "You are using the latest version");
-                } else {
-                    getMessage().sendLog(Level.INFO, "New Update: " + latest);
-                    getMessage().sendLog(Level.INFO, "Current Version: " + getDescription().getVersion());
+            getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+                @Override
+                public void run() {
+                    getLatest((latest) -> {
+                        sendLog(Level.INFO, "Checking latest release");
+                        if (getDescription().getVersion().equals(latest)) {
+                            sendLog(Level.INFO, "You are using the latest version");
+                        } else {
+                            sendLog(Level.INFO, "New Update: " + latest);
+                            sendLog(Level.INFO, "Current Version: " + getDescription().getVersion());
+                        }
+                    });
                 }
             });
         }
     }
-    public void checkLatest(Consumer<String> consumer) {
+    public void getLatest(Consumer<String> consumer) {
         try {
             InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 109924)).openStream();
             Scanner scanner = new Scanner(inputStream);
@@ -128,7 +132,19 @@ public final class Villagers extends JavaPlugin {
                 inputStream.close();
             }
         } catch (IOException e) {
-            getMessage().sendLog(Level.WARNING, e.getMessage());
+            sendLog(Level.WARNING, e.getMessage());
         }
+    }
+    public static void send(ConsoleCommandSender commandSender, String message) {
+        commandSender.sendMessage(message);
+    }
+    public static void send(Player player, String message) {
+        player.sendMessage(addColor(message));
+    }
+    public static void sendActionBar(Player player, String message) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(addColor(message)));
+    }
+    public static String addColor(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }
