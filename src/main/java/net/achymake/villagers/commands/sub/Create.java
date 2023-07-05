@@ -2,12 +2,12 @@ package net.achymake.villagers.commands.sub;
 
 import net.achymake.villagers.Villagers;
 import net.achymake.villagers.commands.VillagersSubCommand;
-import net.achymake.villagers.files.EntityConfig;
+import net.achymake.villagers.files.Database;
 import org.bukkit.entity.Player;
 
 public class Create extends VillagersSubCommand {
-    private EntityConfig getEntityConfig() {
-        return Villagers.getEntityConfig();
+    private Database getDatabase() {
+        return Villagers.getDatabase();
     }
     public String getName() {
         return "create";
@@ -25,7 +25,7 @@ public class Create extends VillagersSubCommand {
                 name.append(args[i]);
                 name.append(" ");
             }
-            getEntityConfig().createVillager(player, name.toString().strip());
+            getDatabase().createVillager(player, name.toString().strip());
         }
     }
 }

@@ -2,7 +2,7 @@ package net.achymake.villagers.commands;
 
 import net.achymake.villagers.Villagers;
 import net.achymake.villagers.commands.sub.*;
-import net.achymake.villagers.files.EntityConfig;
+import net.achymake.villagers.files.Database;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VillagersCommand implements CommandExecutor, TabCompleter {
-    private EntityConfig getEntityConfig() {
-        return Villagers.getEntityConfig();
+    private Database getDatabase() {
+        return Villagers.getDatabase();
     }
     private final ArrayList<VillagersSubCommand> villagersSubCommands = new ArrayList<>();
 
@@ -67,13 +67,13 @@ public class VillagersCommand implements CommandExecutor, TabCompleter {
                     commands.add("player");
                 }
                 if (args[0].equalsIgnoreCase("adult")) {
-                    if (getEntityConfig().hasSelected((Player) sender)) {
-                        commands.add(String.valueOf(getEntityConfig().getSelected((Player) sender).isAdult()));
+                    if (getDatabase().hasSelected((Player) sender)) {
+                        commands.add(String.valueOf(getDatabase().getSelected((Player) sender).isAdult()));
                     }
                 }
                 if (args[0].equalsIgnoreCase("silent")) {
-                    if (getEntityConfig().hasSelected((Player) sender)) {
-                        commands.add(String.valueOf(getEntityConfig().getSelected((Player) sender).isSilent()));
+                    if (getDatabase().hasSelected((Player) sender)) {
+                        commands.add(String.valueOf(getDatabase().getSelected((Player) sender).isSilent()));
                     }
                 }
             }

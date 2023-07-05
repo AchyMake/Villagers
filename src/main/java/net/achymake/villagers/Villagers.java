@@ -34,16 +34,16 @@ public final class Villagers extends JavaPlugin {
     public static void sendLog(Level level, String message) {
         logger.log(level, message);
     }
-    private static EntityConfig entityConfig;
-    public static EntityConfig getEntityConfig() {
-        return entityConfig;
+    private static Database database;
+    public static Database getDatabase() {
+        return database;
     }
     @Override
     public void onEnable() {
         instance = this;
         configuration = getConfig();
         logger = getLogger();
-        entityConfig = new EntityConfig();
+        database = new Database();
         reload();
         commands();
         events();
@@ -52,6 +52,7 @@ public final class Villagers extends JavaPlugin {
     }
     @Override
     public void onDisable() {
+        getServer().getScheduler().cancelTasks(this);
         sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     private void commands() {

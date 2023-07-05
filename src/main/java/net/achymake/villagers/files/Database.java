@@ -12,7 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
-public class EntityConfig {
+public class Database {
     public void createVillager(Player player, String name) {
         Location location = player.getLocation();
         location.setPitch(0);

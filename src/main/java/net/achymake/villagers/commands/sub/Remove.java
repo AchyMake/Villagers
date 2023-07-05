@@ -2,12 +2,12 @@ package net.achymake.villagers.commands.sub;
 
 import net.achymake.villagers.Villagers;
 import net.achymake.villagers.commands.VillagersSubCommand;
-import net.achymake.villagers.files.EntityConfig;
+import net.achymake.villagers.files.Database;
 import org.bukkit.entity.Player;
 
 public class Remove extends VillagersSubCommand {
-    private EntityConfig getEntityConfig() {
-        return Villagers.getEntityConfig();
+    private Database getDatabase() {
+        return Villagers.getDatabase();
     }
     public String getName() {
         return "remove";
@@ -20,11 +20,11 @@ public class Remove extends VillagersSubCommand {
     }
     public void perform(Player player, String[] args) {
         if (args.length == 1) {
-            if (getEntityConfig().hasSelected(player)) {
-                if (getEntityConfig().getSelected(player) != null) {
-                    Villagers.send(player, "&6You removed&f " + getEntityConfig().getSelected(player).getName());
-                    getEntityConfig().getSelected(player).remove();
-                    getEntityConfig().removeSelected(player);
+            if (getDatabase().hasSelected(player)) {
+                if (getDatabase().getSelected(player) != null) {
+                    Villagers.send(player, "&6You removed&f " + getDatabase().getSelected(player).getName());
+                    getDatabase().getSelected(player).remove();
+                    getDatabase().removeSelected(player);
                 } else {
                     Villagers.send(player, "&cYou have to select a villager");
                 }
