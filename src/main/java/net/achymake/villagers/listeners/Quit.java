@@ -8,15 +8,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Quit implements Listener {
-    private Database getEntityConfig() {
-        return Villagers.getEntityConfig();
+    private Database getDatabase() {
+        return Villagers.getDatabase();
     }
     public Quit(Villagers plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onQuit(PlayerQuitEvent event) {
-        if (!getEntityConfig().hasSelected(event.getPlayer()))return;
-        getEntityConfig().removeSelected(event.getPlayer());
+        if (!getDatabase().hasSelected(event.getPlayer()))return;
+        getDatabase().removeSelected(event.getPlayer());
     }
 }
