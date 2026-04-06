@@ -1,0 +1,22 @@
+error:
+  profession:
+    invalid: '{0}&c is not a profession'
+  type:
+    invalid: '{0}&c is not a type'
+  id:
+    invalid: '{0}&c does not exist'
+    already-exist: '{0}&c already exist'
+commands:
+  villager:
+    adult:
+      'true': '{0}&6 is now an adult'
+      'false': '{0}&6 is now a baby'
+    command: '&6You added&f {0}&6 with&f {1}&6 command to&f {2}'
+    create: '&6You created a villager npc&f: {0}'
+    profession: '{0}&6 profession is now&f: {1}'
+    remove: '&6You removed&f {0}&6 villager npc'
+    rename: '&6You renamed&f {0}&6 npc to&f {1}'
+    silent:
+      'true': '{0}&6 is now silent'
+      'false': '{0}&6 is no longer silent'
+    type: '{0}&6 type is now&f: {1}'

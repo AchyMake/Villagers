@@ -1,0 +1,33 @@
+name: Villagers
+version: '${project.version}'
+main: org.achymake.villagers.Villagers
+api-version: '1.21.11'
+prefix: '${project.name}'
+load: POSTWORLD
+author: AchyMake
+softdepend:
+  - Worlds
+  - Multiverse-Core
+description: '${project.description}'
+website: '${project.url}'
+commands:
+  villager:
+    description: nps command
+    permission: villagers.command.villager
+    permission-message: You do not have the permission to execute the command
+    usage: /villager help
+  villagers:
+    description: main command
+    permission: villagers.command.villager
+    permission-message: You do not have the permission to execute the command
+    usage: /villagers help
+permissions:
+  villagers.command.villager:
+    description: npc command
+    default: op
+  villagers.command.villagers:
+    description: main command
+    default: op
+  villagers.event.join.update:
+    description: gets updates on join event
+    default: op

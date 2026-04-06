@@ -1,0 +1,15 @@
+name: '&6Villager'
+adult: true
+profession: NONE
+type: PLAINS
+silent: false
+command-type: player
+command: villager help
+location:
+  world: world
+  x: x
+  y: y
+  z: z
+  yaw: yaw
+  pitch: pitch
+uuid: uuid
